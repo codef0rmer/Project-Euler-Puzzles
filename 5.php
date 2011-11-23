@@ -14,10 +14,10 @@
 include 'global.php';
 
 $i = 1;
-while ($i < 2521) {
+while ($i) {
    if (evenlyDivisible($i) == true) {
-       pr($i."\n");
-       //break;
+     pr($i."\n");
+     break;
    }
    $i++;
 }
@@ -25,16 +25,23 @@ while ($i < 2521) {
 function evenlyDivisible($n)
 {
     $blnEvenlyDivisible = false;
-    $arrDivident = range(1, 10);
-    $cntArrDivident = count($arrDivident);
+    $arrDivident = array(1,2,3,4,5,6,7,8,9,10,11,12,13); //,11,13,17,19);
+    $cntArrDivident = sizeof($arrDivident);
     for ($i = 0; $i < $cntArrDivident; $i++) {
-        $mod = fmod($n, $arrDivident[$i]);
-        if ($mod == 0 || ($mod > 0 && fmod($mod, 2) == 0)) {
-            $blnEvenlyDivisible = true;
-        } else {
-            $blnEvenlyDivisible = false;
-            break;
-        }
+        if ($arrDivident[$i] != '') {
+            $mod = fmod($n, $arrDivident[$i]); 
+            if ($mod == 0) {
+                $blnEvenlyDivisible = true;
+                if ($arrDivident[$i] == 2) {
+	           unset($arrDivident[3], $arrDivident[5], $arrDivident[7], $arrDivident[9], $arrDivident[11]);
+	        } elseif ($arrDivident[$i] == 3) {
+	           unset($arrDivident[8]);
+	        }
+            } else {
+                $blnEvenlyDivisible = false;
+                break;
+            }
+	}
     }
     return $blnEvenlyDivisible;
 }
